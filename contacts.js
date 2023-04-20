@@ -1,24 +1,22 @@
 const fs = require('fs/promises')
-// const path = require('node:path')
+const path = require('path')
+const {nanoid} = require('nanoid')
 
-const contactsPath = __filename;
-console.log(__dirname);
-console.log(contactsPath);
-console.log(__filename);
+const contactsPath = path.join(__dirname, "db/contacts.json");
 
 const fileOperation = async ({ action, data }) => {
     switch (action) {
         case 'read':
-            const result = await fs.readFile(filePath, `utf-8`)
+            const result = await fs.readFile(contactsPath, `utf-8`)
             console.log(result)
             break
 
         case 'add':
-            await fs.appendFile(filePath, data)
+            await fs.appendFile(contactsPath, data)
             break
 
         case 'replace':
-            await fs.writeFile(filePath, data)
+            await fs.writeFile(contactsPath, data)
             break
 
         default:
@@ -27,13 +25,34 @@ const fileOperation = async ({ action, data }) => {
     }
 };
 
-module.exports = {
-    info,
-    log,
+async function listContacts() {
+    const allContacts = await fs.readFile(contactsPath, `utf-8`);
+    return allContacts;
 };
 
-// fileOperation({ action: 'read' })
-// fileOperation({ action: 'add', data: 'smth' })
-// fileOperation({ action: 'replace', data: 'Hello' })
-// fs.rename(filePath, './quote.txt')
-// fs.unlink('./quote.txt')
+async function getContactById(contactId) {
+    const allContacts = await listContacts();
+    const contactById = allContacts.find(el => el.id === contactId);
+    return contactById || null;
+}
+
+async function removeContact(contactId) {
+  // ...твій код
+}
+
+async function addContact(name, email, phone) {
+    const newContact = {
+        id: nanoid(),
+        name: name,
+        email: email,
+        phone: phone
+    };
+    await fs.appendFile(contactsPath, newContact);
+}
+
+module.exports = {
+    listContacts,
+    getContactById,
+    removeContact,
+    addContact
+};

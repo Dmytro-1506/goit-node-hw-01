@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^2.0.22"
+    "nanoid": "^4.0.2",
+    "nodemon": "^2.0.22",
+    "yargs": "^17.7.1"
   }
 }
