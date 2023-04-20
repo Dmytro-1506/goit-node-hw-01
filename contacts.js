@@ -1,29 +1,8 @@
-const fs = require('fs/promises')
-const path = require('path')
-const {nanoid} = require('nanoid')
+const fs = require('fs/promises');
+const path = require('path');
+const { nanoid } = require('nanoid');
 
 const contactsPath = path.join(__dirname, "db/contacts.json");
-
-const fileOperation = async ({ action, data }) => {
-    switch (action) {
-        case 'read':
-            const result = await fs.readFile(contactsPath, `utf-8`)
-            console.log(result)
-            break
-
-        case 'add':
-            await fs.appendFile(contactsPath, data)
-            break
-
-        case 'replace':
-            await fs.writeFile(contactsPath, data)
-            break
-
-        default:
-            console.log('Unknown action')
-            break
-    }
-};
 
 async function listContacts() {
     const allContacts = await fs.readFile(contactsPath, `utf-8`);
