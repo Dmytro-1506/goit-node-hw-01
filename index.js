@@ -29,9 +29,6 @@ async function invokeAction({ action, id, name, email, phone }) {
 };
 
 invokeAction(argv);
-// invokeAction({action: "list"});
-// invokeAction({action: "add"});
-// invokeAction({action: "get", id: "vza2RIzNGIwutCVCs4mCL"});
 
 // # Отримуємо і виводимо весь список контактів у вигляді таблиці (console.table)
 // node index.js --action="list"
